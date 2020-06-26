@@ -9,7 +9,7 @@
 <body>
   <div class="container">
     <div class="baskets" data-bind="foreach: baskets">
-      <div class="basket" data-bind="foreach: balls">
+      <div class="basket" data-bind="foreach: balls, click: click, css: {'active': active}">
         <div class="ball" data-bind="style: {'background' : color}"></div>
       </div>
     </div> 

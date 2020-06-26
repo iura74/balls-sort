@@ -23,10 +23,24 @@ function basket(init = []) {
     const ballsArr = this.balls();
     return ballsArr.length === 4 && ballsArr.every(ball => ball.ballType === ballsArr[0].ballType);
   });
+  this.active = ko.pureComputed(() => this === vm.preGetBasket());
+
+  this.preGet = () => {
+    if (this.canGet()) {
+      vm.preGetBasket(this);
+    } else {
+      vm.preGetBasket(null);
+    }
+  }
+  this.click = () => {
+    this.preGet();
+  }
 }
 
 const vm = {
-  baskets: ko.observableArray(getLevelData().map(x => new basket(x)))  
+  baskets: ko.observableArray(getLevelData().map(x => new basket(x))),
+  preGetBasket: ko.observable(null)
+
 }
 
 ko.applyBindings(vm);
