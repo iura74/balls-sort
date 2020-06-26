@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  padding-top: 50px;
+}
+
+.baskets {
+  display: flex;
+  align-items: stretch;
+  height: 150px;
+}
+
+.basket {
+  position: relative;
+  border: 1px solid black;
+  width: 35px;
+  border-radius: 0% 0% 35px 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.basket:not(:last-child) {
+  margin-right: 10px;
+}
+
+.ball {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
