@@ -5,5 +5,8 @@ const levels = [lvl1, lvl2];
 let curLavel = -1;
 const nextLevelData = () => {
   curLavel = (curLavel < levels.length - 1) ? curLavel + 1: 0;
+  return currentLevelData();
+};
+const currentLevelData = () => {  
   return levels[curLavel];
 };

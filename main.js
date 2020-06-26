@@ -49,10 +49,13 @@ const vm = {
   baskets: ko.observableArray(),
   preGetBasket: ko.observable(null),
   win: ko.pureComputed(() => vm.baskets().every(basket => basket.trust())),
-  getNextLevel() {
+  nextLevel() {
     vm.baskets(nextLevelData().map(x => new basket(x)));
-  } 
+  },
+  revertLevel() {
+    vm.baskets(currentLevelData().map(x => new basket(x)));
+  }
 }
 
 ko.applyBindings(vm);
-vm.getNextLevel();
+vm.nextLevel();
