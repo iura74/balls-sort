@@ -21,7 +21,8 @@ function basket(init = []) {
   };
   this.trust = ko.computed(() => {
     const ballsArr = this.balls();
-    return ballsArr.length === 4 && ballsArr.every(ball => ball.ballType === ballsArr[0].ballType);
+    return ballsArr.length === 0 || 
+           ballsArr.length === 4 && ballsArr.every(ball => ball.ballType === ballsArr[0].ballType);
   });
   this.active = ko.pureComputed(() => this === vm.preGetBasket());
 
@@ -33,14 +34,25 @@ function basket(init = []) {
     }
   }
   this.click = () => {
-    this.preGet();
+    if(!vm.preGetBasket()){
+      this.preGet();
+    } else {
+      if (this.canPut()) {
+        this.put(vm.preGetBasket().get());
+      }
+      vm.preGetBasket(null);
+    }
   }
 }
 
 const vm = {
-  baskets: ko.observableArray(getLevelData().map(x => new basket(x))),
-  preGetBasket: ko.observable(null)
-
+  baskets: ko.observableArray(),
+  preGetBasket: ko.observable(null),
+  win: ko.pureComputed(() => vm.baskets().every(basket => basket.trust())),
+  getNextLevel() {
+    vm.baskets(nextLevelData().map(x => new basket(x)));
+  } 
 }
 
 ko.applyBindings(vm);
+vm.getNextLevel();

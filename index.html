@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="container">
+    <div class="win" data-bind="visible: win(), click: getNextLevel">Вы победили</div>
     <div class="baskets" data-bind="foreach: baskets">
       <div class="basket" data-bind="foreach: balls, click: click, css: {'active': active}">
         <div class="ball" data-bind="style: {'background' : color}"></div>
