@@ -1,16 +1,17 @@
 
-const colors = ['white', 'green', 'yellow', 'red', 'blue'];
+const basketSize = 4;
 
 function ball(ballType) {
   this.ballType = ballType;
-  this.color = colors[ballType] || 'black';
+  this.css = `color-${ballType}`;
+  this.equals = other => this.ballType === other.ballType;
 }
 
 function basket(init = []) {
-  if (init.length > 4) throw new Error('Too Many Balls in the basket');
+  if (init.length > basketSize) throw new Error('Too Many Balls in the basket');
   this.balls = ko.observableArray(init.map(x => new ball(x)));
   this.canGet = ko.computed(() => this.balls().length > 0);
-  this.canPut = ko.computed(() => this.balls().length < 4);
+  this.canPut = ko.computed(() => this.balls().length < basketSize);
   this.get = () => {
     if (!this.canGet()) throw new Error('You can`t get ball from basket');
     return this.balls.pop();
@@ -22,7 +23,7 @@ function basket(init = []) {
   this.trust = ko.computed(() => {
     const ballsArr = this.balls();
     return ballsArr.length === 0 || 
-           ballsArr.length === 4 && ballsArr.every(ball => ball.ballType === ballsArr[0].ballType);
+      ballsArr.length === basketSize && ballsArr.every(ball => ball.equals(ballsArr[0]));
   });
   this.active = ko.pureComputed(() => this === vm.preGetBasket());
 
@@ -33,11 +34,11 @@ function basket(init = []) {
       vm.preGetBasket(null);
     }
   }
-  this.click = () => {
-    if(!vm.preGetBasket()){
+  this.click = () => {   
+    if (!vm.preGetBasket()){
       this.preGet();
     } else {
-      if (this.canPut()) {
+      if (this !== vm.preGetBasket() && this.canPut()) {
         this.put(vm.preGetBasket().get());
       }
       vm.preGetBasket(null);

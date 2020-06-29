@@ -35,8 +35,8 @@
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  border: 1px solid black;
   margin-top: 6px;
+  background: black;
 }
 
 .basket.active .ball:last-child {
@@ -64,3 +64,58 @@
   font-size: 36px;
   cursor: pointer;
 }
+
+.color-0 {
+  background: white;
+  border: 2px solid black;
+}
+
+.color-1 {
+  background: green;
+}
+
+.color-2 {
+  background: red;
+}
+
+.color-3 {
+  background: blue;
+}
+
+.color-4 {
+  background: yellow;
+}
+
+.color-5 {
+  background: deeppink;
+}
+
+.color-6 {
+  background: aquamarine;
+}
+
+.color-7 {
+  background: grey;
+}
+
+.color-8 {
+  background: violet;
+}
+
+.color-9 {
+  background: chocolate;
+}
+
+/* source from https://leaverou.github.io/css3patterns/ */
+
+.color-10 {
+  background: linear-gradient(45deg, #dca 12%, transparent 0, transparent 88%, #dca 0), linear-gradient(135deg, transparent 37%, #a85 0, #a85 63%, transparent 0), linear-gradient(45deg, transparent 37%, #dca 0, #dca 63%, transparent 0) #753;
+  background-size: 25px 25px;  
+}
+
+.color-11 {
+  background: #36c;
+  background: linear-gradient(115deg, transparent 75%, rgba(255, 255, 255, .8) 75%) 0 0, linear-gradient(245deg, transparent 75%, rgba(255, 255, 255, .8) 75%) 0 0, linear-gradient(115deg, transparent 75%, rgba(255, 255, 255, .8) 75%) 7px -15px, linear-gradient(245deg, transparent 75%, rgba(255, 255, 255, .8) 75%) 7px -15px, #36c;
+  background-size: 15px 30px;
+}
+
