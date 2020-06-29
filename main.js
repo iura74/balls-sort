@@ -7,19 +7,15 @@ function ball(ballType) {
   this.equals = other => this.ballType === other.ballType;
 }
 
-function basket(init = []) {
-  if (init.length > basketSize) throw new Error('Too Many Balls in the basket');
-  this.balls = ko.observableArray(init.map(x => new ball(x)));
-  this.canGet = ko.computed(() => this.balls().length > 0);
-  this.canPut = ko.computed(() => this.balls().length < basketSize);
-  this.get = () => {
-    if (!this.canGet()) throw new Error('You can`t get ball from basket');
-    return this.balls.pop();
-  };
-  this.put = (ball) => {
-    if (!this.canPut()) throw new Error('You can`t get ball from basket');
-    return this.balls.push(ball);
-  };
+function basket(init = [], index = 0) { 
+  this.balls = ko.observableArray(init.map(x => new ball(x))); 
+  this.index = index;
+  this.canGet =() => this.balls().length > 0;
+  this.canPut = (ball) => this.balls().length === 0 || 
+                          this.balls().length < basketSize && this.top().equals(ball);
+  this.top = () => this.balls()[0];
+  this.get = () => this.balls.shift();
+  this.put = (ball) => this.balls.unshift(ball);
   this.trust = ko.computed(() => {
     const ballsArr = this.balls();
     return ballsArr.length === 0 || 
@@ -38,8 +34,9 @@ function basket(init = []) {
     if (!vm.preGetBasket()){
       this.preGet();
     } else {
-      if (this !== vm.preGetBasket() && this.canPut()) {
+      if (this !== vm.preGetBasket() && this.canPut(vm.preGetBasket().top())) {
         this.put(vm.preGetBasket().get());
+        vm.history.push([vm.preGetBasket().index, this.index]);
       }
       vm.preGetBasket(null);
     }
@@ -49,14 +46,21 @@ function basket(init = []) {
 const vm = {
   baskets: ko.observableArray(),
   preGetBasket: ko.observable(null),
+  history: ko.observableArray(),
   win: ko.pureComputed(() => vm.baskets().every(basket => basket.trust())),
   nextLevel() {
-    vm.baskets(nextLevelData().map(x => new basket(x)));
+    nextLevel();
+    vm.loadLevel();
   },
-  revertLevel() {
-    vm.baskets(currentLevelData().map(x => new basket(x)));
+  loadLevel() {
+    vm.baskets(currentLevelData().map((x, i) => new basket(x, i)));
+  },
+  back() {
+    vm.preGetBasket(null);
+    const [to, from] = vm.history.pop();
+    vm.baskets()[to].put(vm.baskets()[from].get());
   }
 }
 
 ko.applyBindings(vm);
-vm.nextLevel();
+vm.loadLevel();

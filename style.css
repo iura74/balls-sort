@@ -22,7 +22,8 @@
   width: 35px;
   border-radius: 0% 0% 35px 35px;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
   padding: 5px 0;
 }
@@ -39,7 +40,7 @@
   background: black;
 }
 
-.basket.active .ball:last-child {
+.basket.active .ball:first-child {
   position: absolute;
   top: -30px;
   margin-top: 0;
@@ -59,8 +60,10 @@
   left: 0;
 }
 
-.revert {
+.top-button {
+  display: inline-block;
   padding: 5px;
+  margin-right: 15px;
   font-size: 36px;
   cursor: pointer;
 }
@@ -110,7 +113,7 @@
 
 .color-10 {
   background: linear-gradient(45deg, #dca 12%, transparent 0, transparent 88%, #dca 0), linear-gradient(135deg, transparent 37%, #a85 0, #a85 63%, transparent 0), linear-gradient(45deg, transparent 37%, #dca 0, #dca 63%, transparent 0) #753;
-  background-size: 25px 25px;  
+  background-size: 25px 25px;
 }
 
 .color-11 {
@@ -118,4 +121,3 @@
   background: linear-gradient(115deg, transparent 75%, rgba(255, 255, 255, .8) 75%) 0 0, linear-gradient(245deg, transparent 75%, rgba(255, 255, 255, .8) 75%) 0 0, linear-gradient(115deg, transparent 75%, rgba(255, 255, 255, .8) 75%) 7px -15px, linear-gradient(245deg, transparent 75%, rgba(255, 255, 255, .8) 75%) 7px -15px, #36c;
   background-size: 15px 30px;
 }
-
