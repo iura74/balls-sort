@@ -13,9 +13,9 @@ function basket(init = [], index = 0) {
   this.canGet =() => this.balls().length > 0;
   this.canPut = (ball) => this.balls().length === 0 || 
                           this.balls().length < basketSize && this.top().equals(ball);
-  this.top = () => this.balls()[0];
-  this.get = () => this.balls.shift();
-  this.put = (ball) => this.balls.unshift(ball);
+  this.top = () => this.balls()[this.balls().length - 1];
+  this.get = () => this.balls.pop();
+  this.put = (ball) => this.balls.push(ball);
   this.trust = ko.computed(() => {
     const ballsArr = this.balls();
     return ballsArr.length === 0 || 
@@ -53,7 +53,7 @@ const vm = {
     vm.loadLevel();
   },
   loadLevel() {
-    vm.baskets(currentLevelData().map((x, i) => new basket(x, i)));
+    vm.baskets(currentLevelData().map((x, i) => new basket(x, i))).history([]);
   },
   back() {
     vm.preGetBasket(null);
