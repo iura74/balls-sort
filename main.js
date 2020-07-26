@@ -10,18 +10,16 @@ function ball(ballType) {
 function basket(init = [], index = 0) { 
   this.balls = ko.observableArray(init.map(x => new ball(x))); 
   this.index = index;
-  this.canGet =() => this.balls().length > 0;
+  this.canGet = () => !this.trust() ;
   this.canPut = (ball) => this.balls().length === 0 || 
                           this.balls().length < basketSize && this.top().equals(ball);
   this.top = () => this.balls()[this.balls().length - 1];
   this.get = () => this.balls.pop();
   this.put = (ball) => this.balls.push(ball);
-  this.trust = ko.computed(() => {
-    const ballsArr = this.balls();
-    return ballsArr.length === 0 || 
-      ballsArr.length === basketSize && ballsArr.every(ball => ball.equals(ballsArr[0]));
-  });
-  this.active = ko.pureComputed(() => this === vm.preGetBasket());
+  this.empty = ko.computed(() => !this.balls().length);
+  this.fillTrust = ko.computed(() => this.balls().length === basketSize && this.balls().every(ball => ball.equals(this.balls()[0])));
+  this.trust = ko.computed(() => this.empty() || this.fillTrust());
+  this.active = ko.computed(() => this === vm.preGetBasket());  
 
   this.preGet = () => {
     if (this.canGet()) {

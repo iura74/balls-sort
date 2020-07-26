@@ -17,7 +17,7 @@
     </div>    
     <div class="baskets-wrap">
       <div class="baskets" data-bind="foreach: baskets">
-        <div class="basket" data-bind="foreach: balls, click: click, css: {'active': active}">
+        <div class="basket" data-bind="foreach: balls, click: click, css: {'active': active, 'fill': fillTrust}">
           <div class="ball" data-bind="class: css"></div>
         </div>
       </div>

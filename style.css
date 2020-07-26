@@ -22,9 +22,15 @@
   width: 35px;
   border-radius: 0% 0% 35px 35px;
   display: flex;
-  flex-direction: column-reverse;  
+  flex-direction: column-reverse;
   align-items: center;
   padding: 5px 0;
+  transition: all 500ms cubic-bezier(0.000, 5.000, 0.000, 1.000);
+}
+
+.basket.fill {
+  border-color: goldenrod;
+  border-width: 2px;
 }
 
 .basket:not(:last-child) {
@@ -36,7 +42,7 @@
   height: 25px;
   border-radius: 50%;
   margin-top: 6px;
-  background: black;
+  background: black;  
 }
 
 .basket.active .ball:last-child {
