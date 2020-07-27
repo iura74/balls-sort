@@ -17,7 +17,8 @@ function basket(init = [], index = 0) {
   this.get = () => this.balls.pop();
   this.put = (ball) => this.balls.push(ball);
   this.empty = ko.computed(() => !this.balls().length);
-  this.fillTrust = ko.computed(() => this.balls().length === basketSize && this.balls().every(ball => ball.equals(this.balls()[0])));
+  this.fullSome = ko.computed(() => this.balls().every(ball => ball.equals(this.balls()[0])));
+  this.fillTrust = ko.computed(() => this.balls().length === basketSize && this.fullSome());
   this.trust = ko.computed(() => this.empty() || this.fillTrust());
   this.active = ko.computed(() => this === vm.preGetBasket());  
 
